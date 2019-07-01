@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>My Canvas</title>
+
+		<!-- CSS and javascript -->
+		<script src="./index.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="./index.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+		
+	</head>
+	<body style="background-color:gray;" onload="init_func()">
+		<div id="main">
+
+		<div class="contains">
+			<canvas id="myCanvas" width="500" height="300" onmousedown="f_down(event)" onmousemove="f_move(event)" onmouseup="f_up()"></canvas>
+		</div>
+		
+		<div id="tools">
+			<table style="width:100%; table-layout:fixed;" border="0" cellpadding="0">
+				<tr class="rowx">
+					<td><input type="color" id="myPicker" value="#3a7ebe"></td>
+					<td><i class='fas'>&#xf53f;</i></td>
+					<td><input type="text" id="myTexter" size="3%" value="ILC"></td>
+					<td><i class="fas fa-keyboard"></i></td>
+				</tr>
+				<tr class="rowx">
+					<td colspan="2">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Font Face
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#" onclick="f_change_font(0,'verdana')">verdana</a></li>
+							<li><a href="#" onclick="f_change_font(0,'arial')">arial</a></li>
+							<li><a href="#" onclick="f_change_font(0,'serif')">serif</a></li>
+							<li><a href="#" onclick="f_change_font(0,'fantasy')">fantasy</a></li>
+							<li><a href="#" onclick="f_change_font(0,'monospace')">monospace</a></li>
+						</ul>
+					</div>
+					<td colspan="2">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Font Size
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#" onclick="f_change_font(1,5)">5</a></li>
+							<li><a href="#" onclick="f_change_font(1,10)">10</a></li>
+							<li><a href="#" onclick="f_change_font(1,20)">20</a></li>
+							<li><a href="#" onclick="f_change_font(1,30)">30</a></li>
+							<li><a href="#" onclick="f_change_font(1,40)">40</a></li>
+						</ul>
+					</div>
+					</td>
+				</tr>	
+				<tr class="rowx">
+					<td colspan="3"><input type="range" min="1" max="10" value="5" class="slider" id="mySlider" onmouseup="f_ssb()"></td>
+					<td><i class='fas'>&#xf55d;</i></td>
+				</tr>
+				<tr class="rowx">
+					<td><button class="btnx btnx3" onclick="f_click(1)"><i class='fas fas fa-marker' href="#" data-toggle="tooltip" data-placement="top" title="Pen"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(2)"><i class='fas fa-eraser' href="#" data-toggle="tooltip" data-placement="top" title="eraser"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(3)"><i class='fas fa-rainbow'  href="#" data-toggle="tooltip" data-placement="top" title="Rainbow"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(4)"><i class='fas fa-keyboard' href="#" data-toggle="tooltip" data-placement="top" title="Text: you can text in the input box on the top right of the row and click me to draw."></i></button></td>
+				</tr>
+				<tr class="rowx">
+					<td><button class="btnx btnx3" onclick="f_click(5)"><i class='fas fa-square' href="#" data-toggle="tooltip" data-placement="top" title="Square"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(6)"><i class='fas fa-circle' href="#" data-toggle="tooltip" data-placement="top" title="Circle"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(7)"><i class='fas fa-play' href="#" data-toggle="tooltip" data-placement="top" title="Triangle"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(8)"><i class='fas fa-minus' href="#" data-toggle="tooltip" data-placement="top" title="Line"></i></button></td>
+				</tr>
+				<tr class="rowx">
+					<td><button class="btnx btnx3" onclick="f_click(9)"><i class='fas fa-undo-alt' href="#" data-toggle="tooltip" data-placement="top" title="Undo"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(10)"><i class='fas fa-redo-alt' href="#" data-toggle="tooltip" data-placement="top" title="Redo"></i></button></td>
+					<td><button class="btnx btnx3" ><a class='fas fa-download' href="#" id="myDownload" onclick="f_click(11)" download="image.png" data-toggle="tooltip" data-placement="top" title="Download"></a></button></td>
+					<td><input class="btnx btnx3 fas fa-upload" onclick="f_click(14)" type='file' onchange="readURL(this)" id="ulx" href="#" data-toggle="tooltip" data-placement="top" title="Upload"></td>
+				</tr>
+				<tr class="rowx">					
+					<td><button class="btnx btnx3" onclick="f_click(12)"><i class='fas fa-trash-alt' href="#" data-toggle="tooltip" data-placement="top" title="Trash can: you will delete all the stuff including the strokes on canvas and the redo, undo record."></i></button></td>			
+					<td><button class="btnx btnx3" onclick="f_click(13)"><i class="far fa-laugh" href="#" data-toggle="tooltip" data-placement="top" title="Grin-squint face stamp"></i></button></td>
+					<td><button class="btnx btnx3" onclick="f_click(15)"><i class="fas fa-poo" href="#" data-toggle="tooltip" data-placement="top" title="poopoo pen"></i></button></td>
+					<td class="imgx"><img id="myImg" src="#"></td>
+				</tr>
+			</table>
+		</div>
+		<script>
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip();   
+			});
+		</script>
+  </body>
+</html>
